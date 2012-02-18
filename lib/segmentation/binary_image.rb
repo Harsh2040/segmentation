@@ -21,37 +21,42 @@ class BinaryImage
       row.each_with_index do |value, j|
         next if value == 0
 
-        value = @grid[i][j] = object_number += 1
-
-        strategy[:processed].each do |coords|
-          neighbor = [i + coords.first, j + coords.last]
-
-          next unless neighbor.first >= 0 && neighbor.first < @rows
-          next unless neighbor.last >= 0 && neighbor.last < @columns
-
-          neighbor_value = @grid[neighbor.first][neighbor.last]
-          next if neighbor_value == 0
-
-          @grid[neighbor.first][neighbor.last] = value
-          change_objects(neighbor_value, value)
-        end
-
-        strategy[:not_processed].each do |coords|
-          neighbor = [i + coords.first, j + coords.last]
-
-          next unless neighbor.first >= 0 && neighbor.first < @rows
-          next unless neighbor.last >= 0 && neighbor.last < @columns
-
-          neighbor_value = @grid[neighbor.first][neighbor.last]
-          next if neighbor_value == 0
-
-          @grid[neighbor.first][neighbor.last] = value
-        end
+        @grid[i][j] = object_number += 1
+        do_strategy(strategy, :processed, i, j)
+        do_strategy(strategy, :not_processed, i, j)
       end
     end
   end
 
+  def print_image
+    @grid.each do |row|
+      row.each do |value|
+        print "#{value} ".ljust(4, ' ').rjust(4, ' ')
+      end
+      print "\n"
+    end
+  end
+
   private
+
+  # status is either :processed or :not_processed
+  def do_strategy(strategy, status, row, column)
+    value = @grid[row][column]
+
+    strategy[status].each do |coords|
+      neighbor = [row + coords.first, column + coords.last]
+
+      next unless neighbor.first >= 0 && neighbor.first < @rows
+      next unless neighbor.last >= 0 && neighbor.last < @columns
+
+      neighbor_value = @grid[neighbor.first][neighbor.last]
+      next if neighbor_value == 0
+
+      @grid[neighbor.first][neighbor.last] = value
+      change_objects(neighbor_value, value) if status == :processed
+    end
+  end
+
   # change all objects of the old value to the new value
   def change_objects(old_value, new_value)
     @grid.each do |row|
