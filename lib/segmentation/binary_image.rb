@@ -26,6 +26,8 @@ class BinaryImage
         do_strategy(strategy, :not_processed, i, j)
       end
     end
+
+    re_number_segments
   end
 
   def print_image
@@ -61,6 +63,14 @@ class BinaryImage
   def change_segments(old_value, new_value)
     @grid.each do |row|
       row.map! { |number| number == old_value ? new_value : number }
+    end
+  end
+
+  # start segment numbers at 1
+  def re_number_segments
+    segments = @grid.flatten.uniq.delete_if{ |number| number == 0 }
+    segments.each_with_index do |number, i|
+      change_segments(number, i + 1)
     end
   end
 end
