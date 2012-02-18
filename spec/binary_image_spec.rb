@@ -15,4 +15,20 @@ describe BinaryImage do
       its(:columns) { should == 6 }
     end
   end
+
+  describe "#count_segments" do
+    describe "it should find all of the segments" do
+
+      context "before image has been segmented" do
+        let(:number_of_segments) { image.count_segments }
+        subject{ number_of_segments }
+
+        it { should == 1 }
+      end
+
+      context "after image has been segmented" do
+
+      end
+    end
+  end
 end

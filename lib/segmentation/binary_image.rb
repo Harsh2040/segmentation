@@ -6,4 +6,11 @@ class BinaryImage
     @rows = grid.length
     @columns = grid.first.length
   end
+
+  def count_segments
+    segments = @grid.flatten.uniq.delete_if{ |number| number == 0 }.length
+  end
+
+  def segment_image!
+  end
 end
