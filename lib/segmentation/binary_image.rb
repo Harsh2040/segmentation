@@ -12,7 +12,7 @@ class BinaryImage
   end
 
   def segment!
-    object_number = 1
+    segment_number = 1
     # 4 neighbor: processed: up and left
     strategy = { :processed => [[-1,0],[0,-1]],
                  :not_processed => [[1,0],[0,1]] }
@@ -21,7 +21,7 @@ class BinaryImage
       row.each_with_index do |value, j|
         next if value == 0
 
-        @grid[i][j] = object_number += 1
+        @grid[i][j] = segment_number += 1
         do_strategy(strategy, :processed, i, j)
         do_strategy(strategy, :not_processed, i, j)
       end
@@ -57,7 +57,7 @@ class BinaryImage
     end
   end
 
-  # change all objects of the old value to the new value
+  # change all segments of the old value to the new value
   def change_segments(old_value, new_value)
     @grid.each do |row|
       row.map! { |number| number == old_value ? new_value : number }
