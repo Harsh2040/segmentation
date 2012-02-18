@@ -22,7 +22,6 @@ describe BinaryImage do
       subject{ number_of_segments }
 
       context "before image has been segmented" do
-
         it { should == 1 }
       end
 
