@@ -53,12 +53,12 @@ class BinaryImage
       next if neighbor_value == 0
 
       @grid[neighbor.first][neighbor.last] = value
-      change_objects(neighbor_value, value) if status == :processed
+      change_segments(neighbor_value, value) if status == :processed
     end
   end
 
   # change all objects of the old value to the new value
-  def change_objects(old_value, new_value)
+  def change_segments(old_value, new_value)
     @grid.each do |row|
       row.map! { |number| number == old_value ? new_value : number }
     end
