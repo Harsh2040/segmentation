@@ -18,16 +18,18 @@ describe BinaryImage do
 
   describe "#count_segments" do
     describe "it should find all of the segments" do
+      let(:number_of_segments) { image.count_segments }
+      subject{ number_of_segments }
 
       context "before image has been segmented" do
-        let(:number_of_segments) { image.count_segments }
-        subject{ number_of_segments }
 
         it { should == 1 }
       end
 
       context "after image has been segmented" do
+        before { image.segment! }
 
+        it { should == 2 }
       end
     end
   end
