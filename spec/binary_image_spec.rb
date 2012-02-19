@@ -1,4 +1,5 @@
 require_relative 'spec_helper'
+
 describe BinaryImage do
 
   let(:raw_image) { [[1,0,0,1,0,1],
