@@ -40,3 +40,9 @@ strategy is four neighbor.
     0 0 0
     0 X 0
     0 0 0
+
+## Usage
+See program.rb in the example folder...
+
+## Tested On...
+Ruby 1.9.3-p125
