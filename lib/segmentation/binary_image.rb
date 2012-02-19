@@ -11,7 +11,7 @@ class BinaryImage
     @grid.flatten.uniq.delete_if{ |number| number == 0 }.length
   end
 
-  def segment(strategy)!
+  def segment(strategy)
     segment_number = 1
 
     @grid.each_with_index do |row, i|
