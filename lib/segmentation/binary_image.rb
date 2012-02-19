@@ -11,19 +11,16 @@ class BinaryImage
     @grid.flatten.uniq.delete_if{ |number| number == 0 }.length
   end
 
-  def segment!
+  def segment(strategy)!
     segment_number = 1
-    # 4 neighbor: processed: up and left
-    strategy = { :processed => [[-1,0],[0,-1]],
-                 :not_processed => [[1,0],[0,1]] }
 
     @grid.each_with_index do |row, i|
       row.each_with_index do |value, j|
         next if value == 0
 
         @grid[i][j] = segment_number += 1
-        do_strategy(strategy, :processed, i, j)
-        do_strategy(strategy, :not_processed, i, j)
+        do_strategy(strategy.processed, true, i, j)
+        do_strategy(strategy.not_processed, false, i, j)
       end
     end
 
@@ -42,10 +39,10 @@ class BinaryImage
   private
 
   # status is either :processed or :not_processed
-  def do_strategy(strategy, status, row, column)
+  def do_strategy(strategy, change_processed_segments, row, column)
     value = @grid[row][column]
 
-    strategy[status].each do |coords|
+    strategy.each do |coords|
       neighbor = [row + coords.first, column + coords.last]
 
       next unless neighbor.first >= 0 && neighbor.first < @rows
@@ -55,7 +52,7 @@ class BinaryImage
       next if neighbor_value == 0
 
       @grid[neighbor.first][neighbor.last] = value
-      change_segments(neighbor_value, value) if status == :processed
+      change_segments(neighbor_value, value) if change_processed_segments
     end
   end
 

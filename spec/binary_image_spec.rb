@@ -1,5 +1,4 @@
 require_relative 'spec_helper'
-
 describe BinaryImage do
 
   let(:raw_image) { [[1,0,0,1,0,1],
@@ -27,7 +26,13 @@ describe BinaryImage do
       end
 
       context "after image has been segmented" do
-        before { image.segment! }
+        before do
+          strategy = double()
+          strategy.should_receive(:processed).exactly(12).times.and_return( [[-1,0],[0,-1]] )
+          strategy.should_receive(:not_processed).exactly(12).times.and_return( [[1,0],[0,1]] )
+
+          image.segment(strategy)
+        end
 
         it { should == 2 }
       end
