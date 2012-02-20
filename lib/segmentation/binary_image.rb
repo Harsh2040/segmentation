@@ -38,7 +38,6 @@ class BinaryImage
 
   private
 
-  # status is either :processed or :not_processed
   def do_strategy(strategy, change_processed_segments, row, column)
     value = @grid[row][column]
 
