@@ -5,7 +5,7 @@ describe NeighborStrategy do
     let(:processed) { strategy.processed }
     let(:not_processed) { strategy.not_processed }
 
-    context "default neighbor" do
+    context "default to four neighbor" do
       let(:strategy) { strategy = NeighborStrategy.new() }
 
       subject { processed }
